@@ -65,6 +65,15 @@ Celula **inicializarTabuleiro(int linhas, int colunas)
     return tabuleiro;
 }
 
+void liberarTabuleiro(Celula **tabuleiro, int linhas)
+{
+    for (int i = 0; i < linhas; i++)
+    {
+        free(tabuleiro[i]); // Libera cada linha
+    }
+    free(tabuleiro); // Libera o ponteiro para as linhas
+}
+
 void exibirTabuleiro(Celula **tabuleiro, int linhas, int colunas, char *rotuloColunas, int gatinhosjogador1, int gataojogador1, int gatinhosjogador2, int gataojogador2)
 {
     printf("      %s\n", rotuloColunas);
