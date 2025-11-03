@@ -42,23 +42,30 @@ void mostrarGato()
 #endif
 }
 
-Celula ***inicializarTabuleiro(int linhas, int colunas)
+Celula **inicializarTabuleiro(int linhas, int colunas)
 {
-    Celula ***tabuleiro = (Celula ***)malloc(linhas * sizeof(Celula **));
+    /*
+    Alocando memória para um ponteiro de ponteiros (matriz 2D), 
+    onde cada ponteiro aponta para uma linha.
+    */
+    Celula **tabuleiro = malloc(linhas * sizeof(Celula *));
 
     for (int i = 0; i < linhas; i++)
     {
-        tabuleiro[i] = (Celula **)malloc(colunas * sizeof(Celula *));
+        // Alocando memória para cada linha da matriz
+        tabuleiro[i] = malloc(colunas * sizeof(Celula));
+
+        // Inicializando cada célula do tabuleiro
         for (int j = 0; j < colunas; j++)
         {
-            tabuleiro[i][j] = (Celula *)malloc(sizeof(Celula));
-            tabuleiro[i][j]->gato = ' '; // Inicializa como vazio
-            tabuleiro[i][j]->cor = NULL; // Sem cor inicial
+            tabuleiro[i][j].gato = ' '; // Inicializa como vazio
+            tabuleiro[i][j].cor = NULL; // Sem cor inicial
         }
     }
     return tabuleiro;
 }
-void exibirTabuleiro(Celula ***tabuleiro, int linhas, int colunas, char *rotuloColunas, int gatinhosjogador1, int gataojogador1, int gatinhosjogador2, int gataojogador2)
+
+void exibirTabuleiro(Celula **tabuleiro, int linhas, int colunas, char *rotuloColunas, int gatinhosjogador1, int gataojogador1, int gatinhosjogador2, int gataojogador2)
 {
     printf("      %s\n", rotuloColunas);
     for (int i = 0; i < linhas; i++)
