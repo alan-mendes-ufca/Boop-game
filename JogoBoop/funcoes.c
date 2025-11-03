@@ -84,20 +84,20 @@ void exibirTabuleiro(Celula **tabuleiro, int linhas, int colunas, char *rotuloCo
         for (int j = 0; j < colunas; j++)
         {
             // Aplica a cor se a célula tiver uma cor
-            if (tabuleiro[i][j]->cor != NULL)
+            if (tabuleiro[i][j].cor != NULL)
             {
-                printf("%s", tabuleiro[i][j]->cor);
+                printf("%s", tabuleiro[i][j].cor);
             }
 
-            if (tabuleiro[i][j]->gato == 'g')
+            if (tabuleiro[i][j].gato == 'g')
             {
                 printf("≽^-˕-^≼   ");
             }
-            else if (tabuleiro[i][j]->gato == 'G')
+            else if (tabuleiro[i][j].gato == 'G')
             {
                 printf("/ᐠ - ˕ -マ");
             }
-            else if (tabuleiro[i][j]->gato == ' ')
+            else if (tabuleiro[i][j].gato == ' ')
             {
                 printf("          ");
             }
@@ -116,9 +116,10 @@ void exibirTabuleiro(Celula **tabuleiro, int linhas, int colunas, char *rotuloCo
     printf("\n");
 }
 
-int verificarJogadaValida(Celula ***tabuleiro, int linha, int coluna, char tipoPeca,
+int verificarJogada(Celula **tabuleiro, int linha, int coluna, char tipoPeca,
                           int *gatinhosJogadorAtual, int *gataoJogadorAtual)
 {
+    // Verifica se o tipo de peça é válido
     if (tipoPeca != 'g' && tipoPeca != 'G')
     {
         printf("Tipo de peça inválido! Use 'g' para gatinho ou 'G' para gatão.\n");
@@ -131,13 +132,15 @@ int verificarJogadaValida(Celula ***tabuleiro, int linha, int coluna, char tipoP
         return 0; // Posição fora dos limites
     }
 
-    if (tabuleiro[linha][coluna]->gato == ' ')
-    {
+    if (tabuleiro[linha][coluna].gato == ' ')
+    {                           // Dereferenciando
         if (tipoPeca == 'g' && *gatinhosJogadorAtual > 0)
         {
             (*gatinhosJogadorAtual)--;
             return 1;
-        }else if (tipoPeca == 'G' && *gataoJogadorAtual > 0)
+
+        }
+        else if (tipoPeca == 'G' && *gataoJogadorAtual > 0)
         {
             (*gataoJogadorAtual)--;
             return 1;
