@@ -1,6 +1,9 @@
 #ifndef FUNCOES_H
 #define FUNCOES_H
 
+// Definição do tamanho do tabuleiro
+#define tamanhoTabuleiro 6
+
 // Definições de cores para texto
 #define RED "\x1b[1;31m"  // Cor vermelha
 #define BLUE "\x1b[1;34m" // Cor azul
@@ -37,4 +40,10 @@ typedef struct
     int quantidadePecasAtivas;
 } Jogador;
 
+void get_input(char *tipoPeca, int *linha, char *coluna);
+
+void fluxoJogo(Celula **tabuleiro, int linha, int colunaIndex, char tipoPeca,
+                Jogador jogador1, Jogador jogador2,
+                Jogador *atual, int turno, int jogadaValida);
+                
 #endif // FUNCOES_H

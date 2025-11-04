@@ -8,10 +8,6 @@
 #include "tabuleiro/tabuleiro.h"
 #include "vitoria/vencer.h"
 
-int tamanhoTabuleiro = 6;
-
-void get_input(char *tipoPeca, int *linha, char *coluna);
-
 int main()
 {
     // Configura a localidade para suportar caracteres especiais
@@ -49,21 +45,14 @@ int main()
 
             jogadaValida = verificarJogada(tabuleiro, linha, colunaIndex, tipoPeca,
                                            &atual->quantidadeGatinhos, &atual->quantidadeGatos);
-        
-                                        } while (!jogadaValida);
+
+        } while (!jogadaValida);
 
         atual->quantidadePecasAtivas++;
 
-        fazBoop(tabuleiro, linha, colunaIndex, tamanhoTabuleiro, tamanhoTabuleiro, &jogador1.quantidadeGatinhos, &jogador1.quantidadeGatos, &jogador2.quantidadeGatinhos, &jogador2.quantidadeGatos,
-                tipoPeca, (turno % 2 == 0) ? 1 : 2, &atual->quantidadePecasAtivas, jogadaValida);
-
-        graduar(tabuleiro, tamanhoTabuleiro, tamanhoTabuleiro,
-                &atual->quantidadeGatinhos, &atual->quantidadeGatos,
-                &atual->quantidadePecasAtivas);
-
-        graduarMultiplasLinhas(tabuleiro, tamanhoTabuleiro, tamanhoTabuleiro,
-                               &atual->quantidadeGatinhos, &atual->quantidadeGatos,
-                               &atual->quantidadePecasAtivas);
+        fluxoJogo(tabuleiro, linha, colunaIndex, tipoPeca,
+                   jogador1, jogador2,
+                   atual, turno, jogadaValida);
 
         int vencedor = verificaVitoria(tabuleiro, tamanhoTabuleiro, tamanhoTabuleiro, jogador1.quantidadePecasAtivas, jogador2.quantidadePecasAtivas);
         if (vencedor == 1)
@@ -86,10 +75,4 @@ int main()
 
         turno++;
     }
-}
-
-void get_input(char *tipoPeca, int *linha, char *coluna)
-{
-    printf("\nDigite o tipo de peça ('g' para gatinho, 'G' para gatão) e a coordenada (ex: g 1 A):\n");
-    scanf(" %c %d %c", tipoPeca, linha, coluna);
 }
