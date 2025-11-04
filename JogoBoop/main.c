@@ -66,13 +66,7 @@ int main()
             break;
         }
 
-        if (jogador1.quantidadeGatinhos == 0 && jogador1.quantidadeGatos == 0 &&
-            jogador2.quantidadeGatinhos == 0 && jogador2.quantidadeGatos == 0)
-        {
-            printf("\033[33mEmpate! Todos os gatinhos e gatões se foram.\033[0m\n");
-            jogoAtivo = 0;
-        }
-
+        verificarEmpate(jogador1, jogador2);
         turno++;
     }
 }

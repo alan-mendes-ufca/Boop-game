@@ -58,3 +58,13 @@ int verificaVitoria(Celula **tabuleiro, int linhas, int colunas, int gatosNaCama
     // Sem vencedor
     return 0;
 }
+
+void verificarEmpate(Jogador jogador1, Jogador jogador2)
+{
+    if (jogador1.quantidadeGatinhos == 0 && jogador1.quantidadeGatos == 0 &&
+        jogador2.quantidadeGatinhos == 0 && jogador2.quantidadeGatos == 0)
+    {
+        printf("O jogo terminou em empate! Ambos os jogadores ficaram sem peças.\n");
+        exit(0); // Encerra o programa
+    }
+}
