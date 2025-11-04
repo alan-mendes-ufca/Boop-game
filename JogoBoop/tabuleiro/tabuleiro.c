@@ -74,7 +74,8 @@ void liberarTabuleiro(Celula **tabuleiro, int linhas)
     free(tabuleiro); // Libera o ponteiro para as linhas
 }
 
-void exibirTabuleiro(Celula **tabuleiro, int linhas, int colunas, char *rotuloColunas, int gatinhosjogador1, int gataojogador1, int gatinhosjogador2, int gataojogador2)
+void exibirTabuleiro(Celula **tabuleiro, int linhas, int colunas, char *rotuloColunas, int gatinhosjogador1, 
+    int gataojogador1, int gatinhosjogador2, int gataojogador2, int atual)
 {
     printf("      %s\n", rotuloColunas);
     for (int i = 0; i < linhas; i++)
@@ -114,4 +115,10 @@ void exibirTabuleiro(Celula **tabuleiro, int linhas, int colunas, char *rotuloCo
     printf("\033[34mGatão Jogador 2: %d\033[0m\t", gataojogador2);
     printf("\n");
     printf("\n");
+
+    if (atual == 1) {
+        printf("\033[31mVez do Jogador 1\033[0m\n");
+    } else {
+        printf("\033[34mVez do Jogador 2\033[0m\n");
+    }
 }

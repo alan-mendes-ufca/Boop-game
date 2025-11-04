@@ -5,6 +5,7 @@
 void mostrarGato();
 Celula **inicializarTabuleiro(int linhas, int colunas);
 void liberarTabuleiro(Celula **tabuleiro, int linhas);
-void exibirTabuleiro(Celula **tabuleiro, int linhas, int colunas, char *rotuloColunas, int gatinhosjogador1, int gataojogador1, int gatinhosjogador2, int gataojogador2);
+void exibirTabuleiro(Celula **tabuleiro, int linhas, int colunas, char *rotuloColunas, 
+    int gatinhosjogador1, int gataojogador1, int gatinhosjogador2, int gataojogador2, int atual);
 
 #endif // TABULEIRO_H

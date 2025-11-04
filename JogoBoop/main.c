@@ -8,29 +8,24 @@
 #include "tabuleiro/tabuleiro.h"
 #include "vitoria/vencer.h"
 
+int tamanhoTabuleiro = 6;
 
+void get_input(char *tipoPeca, int *linha, char *coluna);
 
 int main()
 {
     // Configura a localidade para suportar caracteres especiais
     setlocale(LC_ALL, "Portuguese");
-    
-    Jogador jogador1 = {8, 0};
-    Jogador jogador2 = {8, 0};
 
-    int gatosAtivosPlayer1 = 0, gatosAtivosPlayer2 = 0, jogadorAtual = 0;
-
-    int *gatinhosJogadorAtual, *gatoJogadorAtual, *gatosAtivosJogadorAtual, *gatinhosAdversario, *gatoAdversario,
-    *gatinhosJogador1, *gatoJogador1, *gatinhosJogador2, *gatoJogador2;
-
-    int jogadaValida = 0, tamanhoTabuleiro = 6, turno = 0, jogoAtivo = 1;
+    Jogador jogador1 = {8, 0, 0};
+    Jogador jogador2 = {8, 0, 0};
 
     Celula **tabuleiro;
-    Estado **estado;
-    char letrasColuna[] = "A          B          C          D          E          F"; 
     char tipoPeca;
-    int linha;
-    char coluna, comando;
+    int linha, colunaIndex;
+    char coluna;
+
+    int turno = 0, jogoAtivo = 1, jogadaValida = 1;
 
     // Preenche com ' '
     tabuleiro = inicializarTabuleiro(tamanhoTabuleiro, tamanhoTabuleiro);
@@ -39,71 +34,62 @@ int main()
 
     while (jogoAtivo)
     {
+        Jogador *atual = (turno % 2 == 0) ? &jogador1 : &jogador2;
         printf("\n");
-        exibirTabuleiro(tabuleiro, tamanhoTabuleiro, tamanhoTabuleiro, letrasColuna, jogador1.quantidadeGatinhos, 
-            jogador1.quantidadeGatos, jogador2.quantidadeGatinhos, jogador2.quantidadeGatos);
+        exibirTabuleiro(tabuleiro, tamanhoTabuleiro, tamanhoTabuleiro, "A          B          C          D          E          F", jogador1.quantidadeGatinhos,
+                        jogador1.quantidadeGatos, jogador2.quantidadeGatinhos, jogador2.quantidadeGatos, (turno % 2) + 1);
 
-        Jogador *atual = (turno % 2 == 0) ? jogador1 : jogador2;
-        
         do
         {
-            printf("\nDigite o tipo de peça ('g' para gatinho, 'G' para gatão) e a coordenada (ex: g 1 A):\n");
-            scanf(" %c %d %c", &tipoPeca, &linha, &coluna);
+            get_input(&tipoPeca, &linha, &coluna);
 
             // Ajusta entrada do jogador para os índices do tabuleiro
             linha--;
-            int colunaIndex = coluna - 'A';
+            colunaIndex = coluna - 'A';
 
-            jogadaValida = verificarJogada(tabuleiro, linha, colunaIndex, tipoPeca, 
+            jogadaValida = verificarJogada(tabuleiro, linha, colunaIndex, tipoPeca,
                                            &atual->quantidadeGatinhos, &atual->quantidadeGatos);
-                                           
-            if (jogadaValida)
-            {
-                (*gatosAtivosJogadorAtual)++;
+        
+                                        } while (!jogadaValida);
 
-                fazBoop(tabuleiro, linha, colunaIndex, tamanhoTabuleiro, tamanhoTabuleiro, &jogador1.quantidadeGatinhos, &jogador1.quantidadeGatos, &jogador2.quantidadeGatinhos, &jogador2.quantidadeGatos,
-                        tipoPeca, (turno%2==0)? 1 : 2, gatosAtivosJogadorAtual, jogadaValida);
+        atual->quantidadePecasAtivas++;
 
-                graduar(tabuleiro, tamanhoTabuleiro, tamanhoTabuleiro,
-                        gatinhosJogadorAtual, gatoJogadorAtual,
-                        gatosAtivosJogadorAtual);
+        fazBoop(tabuleiro, linha, colunaIndex, tamanhoTabuleiro, tamanhoTabuleiro, &jogador1.quantidadeGatinhos, &jogador1.quantidadeGatos, &jogador2.quantidadeGatinhos, &jogador2.quantidadeGatos,
+                tipoPeca, (turno % 2 == 0) ? 1 : 2, &atual->quantidadePecasAtivas, jogadaValida);
 
-                graduarMultiplasLinhas(tabuleiro, tamanhoTabuleiro, tamanhoTabuleiro,
-                                       gatinhosJogadorAtual, gatoJogadorAtual,
-                                       gatosAtivosJogadorAtual);
+        graduar(tabuleiro, tamanhoTabuleiro, tamanhoTabuleiro,
+                &atual->quantidadeGatinhos, &atual->quantidadeGatos,
+                &atual->quantidadePecasAtivas);
 
-                int vencedor = verificaVitoria(tabuleiro, tamanhoTabuleiro, tamanhoTabuleiro, gatosAtivosPlayer1, gatosAtivosPlayer2);
-                if (vencedor == 1)
-                {
-                    printf("Jogador 1 venceu!\n");
-                    break;
-                }
-                else if (vencedor == 2)
-                {
-                    printf("Jogador 2 venceu!\n");
-                    break;
-                }
-            }
-            else
-            {
-                printf("\033[33mJogada inválida! Posição indisponível ou qtde de peças inválida.\033[0m\n");
-                printf("\033[33m A entrada não pode ser letras minúsculas!! \033[0m\n");
-            }
-        } while (!jogadaValida);
+        graduarMultiplasLinhas(tabuleiro, tamanhoTabuleiro, tamanhoTabuleiro,
+                               &atual->quantidadeGatinhos, &atual->quantidadeGatos,
+                               &atual->quantidadePecasAtivas);
 
-        if (*gatinhosJogadorAtual == 0 && *gatoJogadorAtual == 0 &&
-            *gatinhosAdversario == 0 && *gatoAdversario == 0)
+        int vencedor = verificaVitoria(tabuleiro, tamanhoTabuleiro, tamanhoTabuleiro, jogador1.quantidadePecasAtivas, jogador2.quantidadePecasAtivas);
+        if (vencedor == 1)
+        {
+            printf("Jogador 1 venceu!\n");
+            break;
+        }
+        else if (vencedor == 2)
+        {
+            printf("Jogador 2 venceu!\n");
+            break;
+        }
+
+        if (jogador1.quantidadeGatinhos == 0 && jogador1.quantidadeGatos == 0 &&
+            jogador2.quantidadeGatinhos == 0 && jogador2.quantidadeGatos == 0)
         {
             printf("\033[33mEmpate! Todos os gatinhos e gatões se foram.\033[0m\n");
             jogoAtivo = 0;
         }
 
         turno++;
-
-#ifdef _WIN32
-        system("cls");
-#else
-        system("clear");
-#endif
     }
+}
+
+void get_input(char *tipoPeca, int *linha, char *coluna)
+{
+    printf("\nDigite o tipo de peça ('g' para gatinho, 'G' para gatão) e a coordenada (ex: g 1 A):\n");
+    scanf(" %c %d %c", tipoPeca, linha, coluna);
 }
