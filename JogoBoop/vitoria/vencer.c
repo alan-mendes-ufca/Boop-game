@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "graduar.h"
+#include "../funcoes.h"
 
 int verificaVitoria(Celula **tabuleiro, int linhas, int colunas, int gatosNaCamaJogador1, int gatosNaCamaJogador2)
 {

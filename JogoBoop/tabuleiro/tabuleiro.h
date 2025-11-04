@@ -1,6 +1,6 @@
 #ifndef TABULEIRO_H
 #define TABULEIRO_H
-#include "JogoBoop/funcoes.h"
+#include "../funcoes.h"
 
 void mostrarGato();
 Celula **inicializarTabuleiro(int linhas, int colunas);

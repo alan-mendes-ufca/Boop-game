@@ -1,13 +1,6 @@
 #ifndef FUNCOES_H
 #define FUNCOES_H
 
-
-#include "tabuleiro/tabuleiro.h"
-#include "jogada/jogada.h"
-#include "graduar/graduar.h"
-#include "vitoria/vencer.h"
-
-
 // Definições de cores para texto
 #define RED "\x1b[1;31m"  // Cor vermelha
 #define BLUE "\x1b[1;34m" // Cor azul
@@ -32,9 +25,15 @@ typedef struct
     int gatosAtivosPlayer1;
     int gatosAtivosPlayer2;
 
-    Celula ***tabuleiro;
+    Celula **tabuleiro;
     int tamanhoTabuleiro;
 
 } Estado;
+
+typedef struct
+{
+    int quantidadeGatinhos;
+    int quantidadeGatos;
+} Jogador;
 
 #endif // FUNCOES_H

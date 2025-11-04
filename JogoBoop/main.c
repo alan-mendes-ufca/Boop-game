@@ -1,37 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+
 #include "funcoes.h"
+#include "graduar/graduar.h"
+#include "jogada/jogada.h"
+#include "tabuleiro/tabuleiro.h"
+#include "vitoria/vencer.h"
+
+
 
 int main()
 {
+    // Configura a localidade para suportar caracteres especiais
     setlocale(LC_ALL, "Portuguese");
-    int qtde_gatinhosJogador1 = 8;
-    int qtde_gatoJogador1 = 0;
-    int qtde_gatinhosJogador2 = 8;
-    int qtde_gatoJogador2 = 0;
+    
+    Jogador jogador1 = {8, 0};
+    Jogador jogador2 = {8, 0};
 
-    int gatosAtivosPlayer1 = 0;
-    int gatosAtivosPlayer2 = 0;
+    int gatosAtivosPlayer1 = 0, gatosAtivosPlayer2 = 0, jogadorAtual = 0;
 
-    int jogadorAtual = 0;
-
-    int *gatinhosJogadorAtual;
-    int *gatoJogadorAtual;
-    int *gatosAtivosJogadorAtual;
-
-    int *gatinhosAdversario;
-    int *gatoAdversario;
-
-    int *gatinhosJogador1;
-    int *gatoJogador1;
-    int *gatinhosJogador2;
-    int *gatoJogador2;
+    int *gatinhosJogadorAtual, *gatoJogadorAtual, *gatosAtivosJogadorAtual, *gatinhosAdversario, *gatoAdversario,
+    *gatinhosJogador1, *gatoJogador1, *gatinhosJogador2, *gatoJogador2;
 
     int jogadaValida = 0, tamanhoTabuleiro = 6, turno = 0, jogoAtivo = 1;
-    Celula ***tabuleiro;
+
+    Celula **tabuleiro;
     Estado **estado;
-    char letrasColuna[] = "A          B          C          D          E          F", tipoPeca;
+    char letrasColuna[] = "A          B          C          D          E          F"; 
+    char tipoPeca;
     int linha;
     char coluna, comando;
 
@@ -43,36 +40,11 @@ int main()
     while (jogoAtivo)
     {
         printf("\n");
+        exibirTabuleiro(tabuleiro, tamanhoTabuleiro, tamanhoTabuleiro, letrasColuna, jogador1.quantidadeGatinhos, 
+            jogador1.quantidadeGatos, jogador2.quantidadeGatinhos, jogador2.quantidadeGatos);
 
-        exibirTabuleiro(tabuleiro, tamanhoTabuleiro, tamanhoTabuleiro, letrasColuna, qtde_gatinhosJogador1, qtde_gatoJogador1, qtde_gatinhosJogador2, qtde_gatoJogador2);
-
-        // Determina o jogador atual
-        if (turno % 2 == 0)
-        {
-            jogadorAtual = 1;
-            gatinhosJogadorAtual = &qtde_gatinhosJogador1;
-            gatinhosAdversario = &qtde_gatinhosJogador2;
-            gatoJogadorAtual = &qtde_gatoJogador1;
-            gatoAdversario = &qtde_gatoJogador2;
-            gatosAtivosJogadorAtual = &gatosAtivosPlayer1;
-            printf("\033[31mÉ a vez do Jogador 1! Boa sorte!\033[0m\n");
-        }
-        else
-        {
-            jogadorAtual = 2;
-            gatinhosJogadorAtual = &qtde_gatinhosJogador2;
-            gatinhosAdversario = &qtde_gatinhosJogador1;
-            gatoJogadorAtual = &qtde_gatoJogador2;
-            gatoAdversario = &qtde_gatoJogador1;
-            gatosAtivosJogadorAtual = &gatosAtivosPlayer2;
-            printf("\033[34mJogador 2, é sua vez! Mostre seu talento!\033[0m\n");
-        }
-
-        gatinhosJogador1 = &qtde_gatinhosJogador1;
-        gatoJogador1 = &qtde_gatoJogador1;
-        gatinhosJogador2 = &qtde_gatinhosJogador2;
-        gatoJogador2 = &qtde_gatoJogador2;
-
+        Jogador *atual = (turno % 2 == 0) ? jogador1 : jogador2;
+        
         do
         {
             printf("\nDigite o tipo de peça ('g' para gatinho, 'G' para gatão) e a coordenada (ex: g 1 A):\n");
@@ -82,13 +54,15 @@ int main()
             linha--;
             int colunaIndex = coluna - 'A';
 
-            jogadaValida = verificarJogadaValida(tabuleiro, linha, colunaIndex, tipoPeca, gatinhosJogadorAtual, gatoJogadorAtual);
+            jogadaValida = verificarJogada(tabuleiro, linha, colunaIndex, tipoPeca, 
+                                           &atual->quantidadeGatinhos, &atual->quantidadeGatos);
+                                           
             if (jogadaValida)
             {
                 (*gatosAtivosJogadorAtual)++;
 
-                fazBoop(tabuleiro, linha, colunaIndex, tamanhoTabuleiro, tamanhoTabuleiro,
-                        gatinhosJogador1, gatoJogador1, gatinhosJogador2, gatoJogador2, tipoPeca, jogadorAtual, gatosAtivosJogadorAtual, jogadaValida);
+                fazBoop(tabuleiro, linha, colunaIndex, tamanhoTabuleiro, tamanhoTabuleiro, &jogador1.quantidadeGatinhos, &jogador1.quantidadeGatos, &jogador2.quantidadeGatinhos, &jogador2.quantidadeGatos,
+                        tipoPeca, (turno%2==0)? 1 : 2, gatosAtivosJogadorAtual, jogadaValida);
 
                 graduar(tabuleiro, tamanhoTabuleiro, tamanhoTabuleiro,
                         gatinhosJogadorAtual, gatoJogadorAtual,

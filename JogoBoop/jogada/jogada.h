@@ -1,14 +1,13 @@
 #ifndef JOGADA_H
 #define JOGADA_H
-#include "JogoBoop/funcoes.h"
-
+# include "../funcoes.h"
 int verificarJogada(Celula **tabuleiro, int linha, int coluna, char tipoPeca,
                     int *gatinhosJogadorAtual, int *gatosJogadorAtual);
 
 int posicaoValida(int linha, int coluna, int totalLinhas, int totalColunas);
 
 void fazBoop(
-    Celula ***tabuleiro, int linha, int coluna, int totalLinhas, int totalColunas,
+    Celula **tabuleiro, int linha, int coluna, int totalLinhas, int totalColunas,
     int *gatinhosJogadorAtual, int *gataoJogadorAtual,
     int *gatinhosAdversario, int *gataoAdversario, char tipoPeca, int Jogador, int *gatosAtivos, int playCorreta);
 

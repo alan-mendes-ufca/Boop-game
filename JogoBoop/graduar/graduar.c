@@ -5,7 +5,7 @@
 
 // Função para graduar gatinhos em gatos
 void graduar(
-    Celula ***tabuleiro, int linhas, int colunas,
+    Celula **tabuleiro, int linhas, int colunas,
     int *gatinhosJogadorAtual, int *gatosJogadorAtual,
     int *pecasAtivas)
 {
@@ -26,7 +26,7 @@ void graduar(
     {
         for (int j = 0; j < colunas; j++)
         {
-            char pecaAtual = tabuleiro[i][j]->gato;
+            char pecaAtual = tabuleiro[i][j].gato;
             if (pecaAtual == 'g' || pecaAtual == 'G')
             {
                 for (int d = 0; d < 4; d++)
@@ -40,8 +40,8 @@ void graduar(
                     if (linha1 >= 0 && linha1 < linhas && coluna1 >= 0 && coluna1 < colunas &&
                         linha2 >= 0 && linha2 < linhas && coluna2 >= 0 && coluna2 < colunas)
                     {
-                        char peca1 = tabuleiro[linha1][coluna1]->gato;
-                        char peca2 = tabuleiro[linha2][coluna2]->gato;
+                        char peca1 = tabuleiro[linha1][coluna1].gato;
+                        char peca2 = tabuleiro[linha2][coluna2].gato;
                         if ((peca1 == 'g' || peca1 == 'G') &&
                             (peca2 == 'g' || peca2 == 'G'))
                         {
@@ -70,7 +70,7 @@ void graduar(
         {
             int x = linhaEscolhida[k][0];
             int y = linhaEscolhida[k][1];
-            tabuleiro[x][y]->gato = ' ';
+            tabuleiro[x][y].gato = ' ';
         }
 
         // Atualiza o número de peças ativas no tabuleiro
@@ -122,7 +122,7 @@ void graduar(
 }
 
 void graduarMultiplasLinhas(
-    Celula ***tabuleiro, int linhas, int colunas,
+    Celula **tabuleiro, int linhas, int colunas,
     int *gatinhosJogadorAtual, int *gatosJogadorAtual,
     int *pecasAtivas)
 {
@@ -144,7 +144,7 @@ void graduarMultiplasLinhas(
     {
         for (int j = 0; j < colunas; j++)
         {
-            char pecaAtual = tabuleiro[i][j]->gato;
+            char pecaAtual = tabuleiro[i][j].gato;
 
             // Verifica apenas gatinhos ou gatos
             if (pecaAtual == 'g' || pecaAtual == 'G')
@@ -162,8 +162,8 @@ void graduarMultiplasLinhas(
                     {
 
                         // Verifica se as peças são do mesmo tipo
-                        if (tabuleiro[linha1][coluna1]->gato == pecaAtual &&
-                            tabuleiro[linha2][coluna2]->gato == pecaAtual)
+                        if (tabuleiro[linha1][coluna1].gato == pecaAtual &&
+                            tabuleiro[linha2][coluna2].gato == pecaAtual)
                         {
 
                             // Adiciona a linha encontrada à lista
@@ -195,7 +195,7 @@ void graduarMultiplasLinhas(
         {
             int x = linhasEncontradas[k][p][0];
             int y = linhasEncontradas[k][p][1];
-            tabuleiro[x][y]->gato = ' '; // Remove a peça
+            tabuleiro[x][y].gato = ' '; // Remove a peça
         }
 
         // Atualiza o número de peças ativas no tabuleiro
