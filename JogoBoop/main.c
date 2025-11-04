@@ -24,7 +24,7 @@ int main()
     int turno = 0, jogoAtivo = 1, jogadaValida = 1;
 
     // Preenche com ' '
-    tabuleiro = inicializarTabuleiro(tamanhoTabuleiro, tamanhoTabuleiro);
+    tabuleiro = inicializarTabuleiro(TAMANHO_TABULEIRO, TAMANHO_TABULEIRO);
 
     mostrarGato();
 
@@ -32,7 +32,7 @@ int main()
     {
         Jogador *atual = (turno % 2 == 0) ? &jogador1 : &jogador2;
         printf("\n");
-        exibirTabuleiro(tabuleiro, tamanhoTabuleiro, tamanhoTabuleiro, "A          B          C          D          E          F", jogador1.quantidadeGatinhos,
+        exibirTabuleiro(tabuleiro, TAMANHO_TABULEIRO, TAMANHO_TABULEIRO, "A          B          C          D          E          F", jogador1.quantidadeGatinhos,
                         jogador1.quantidadeGatos, jogador2.quantidadeGatinhos, jogador2.quantidadeGatos, (turno % 2) + 1);
 
         do
@@ -54,7 +54,7 @@ int main()
                    jogador1, jogador2,
                    atual, turno, jogadaValida);
 
-        int vencedor = verificaVitoria(tabuleiro, tamanhoTabuleiro, tamanhoTabuleiro, jogador1.quantidadePecasAtivas, jogador2.quantidadePecasAtivas);
+        int vencedor = verificaVitoria(tabuleiro, TAMANHO_TABULEIRO, TAMANHO_TABULEIRO, jogador1.quantidadePecasAtivas, jogador2.quantidadePecasAtivas);
         if (vencedor == 1)
         {
             printf("Jogador 1 venceu!\n");

@@ -2,7 +2,7 @@
 #define FUNCOES_H
 
 // Definição do tamanho do tabuleiro
-#define tamanhoTabuleiro 6
+#define TAMANHO_TABULEIRO 6
 
 // Definições de cores para texto
 #define RED "\x1b[1;31m"  // Cor vermelha
