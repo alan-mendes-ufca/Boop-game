@@ -119,16 +119,16 @@ void aplicarBoop(Celula **tabuleiro, int linha, int coluna, int direcaoLinha, in
 
         if (gatoRemovido == 'g')
         {
-            if (corRemovida == RED)
+            if (strcmp(corRemovida, RED) == 0)
                 (*gatinhosJogador1)++;
-            else if (corRemovida == BLUE)
+            else if (strcmp(corRemovida, BLUE) == 0)
                 (*gatinhosJogador2)++;
         }
         else if (gatoRemovido == 'G')
         {
-            if (corRemovida == RED)
+            if (strcmp(corRemovida, RED) == 0)
                 (*gatoJogador1)++;
-            else if (corRemovida == BLUE)
+            else if (strcmp(corRemovida, BLUE) == 0)
                 (*gatoJogador2)++;
         }
 

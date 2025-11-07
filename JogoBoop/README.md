@@ -124,11 +124,6 @@ sudo make uninstall
 
 ### 🔴 Críticos (Impedem o Jogo de Funcionar)
 
-1. **Segmentation Fault ao Jogar** ⚠️
-   - **Causa**: Uso incorreto de `strcmp()` com `char` em vez de `char*`
-   - **Local**: `jogada/jogada.c` linha 10, 26, 31
-   - **Problema**: `tipoPeca` é `char`, mas `strcmp()` espera `const char*`
-
 2. **Comparação de Cores Incorreta**
    - **Causa**: Comparação de ponteiros (`corRemovida == RED`) em vez de valores
    - **Local**: `jogada/jogada.c` linhas 122, 124, 129, 131
@@ -187,58 +182,6 @@ sudo make uninstall
 ## 📝 TODO List - Roadmap de Melhorias
 
 ### 🔥 Prioridade ALTA - Consertar Bugs Críticos
-
-#### TODO #1: Corrigir Validação de Tipo de Peça
-**Arquivo**: `jogada/jogada.c`  
-**Problema**: `strcmp()` usado com `char` em vez de comparação direta  
-**Solução**:
-```c
-// ❌ ERRADO
-if (strcmp(tipoPeca, "g") != 0 && strcmp(tipoPeca, "G") != 0)
-
-// ✅ CORRETO
-if (tipoPeca != 'g' && tipoPeca != 'G')
-```
-
-**O que estudar**:
-- Diferença entre `char` e `char*` em C
-- Quando usar `strcmp()` vs comparação direta
-- [Tutorial: Strings em C](https://www.cprogramming.com/tutorial/c/lesson9.html)
-
----
-
-#### TODO #2: Corrigir Comparação de Cores
-**Arquivo**: `jogada/jogada.c` linhas 122, 124, 129, 131  
-**Problema**: Compara ponteiros em vez de conteúdo de strings  
-**Solução Opção 1** (usar `strcmp`):
-```c
-// ❌ ERRADO
-if (corRemovida == RED)
-
-// ✅ CORRETO
-if (strcmp(corRemovida, RED) == 0)
-```
-
-**Solução Opção 2** (usar enum - RECOMENDADO):
-```c
-// Em funcoes.h
-typedef enum { COR_JOGADOR1, COR_JOGADOR2 } CorJogador;
-
-// Na struct Celula
-typedef struct {
-    char gato;
-    CorJogador cor;  // Em vez de const char*
-} Celula;
-```
-
-**O que estudar**:
-- Comparação de strings em C (`strcmp`, `strncmp`)
-- Enums em C e quando usá-los
-- Ponteiros vs valores
-- [Tutorial: String comparison](https://www.tutorialspoint.com/c_standard_library/c_function_strcmp.htm)
-- [Tutorial: Enums](https://www.geeksforgeeks.org/enumeration-enum-c/)
-
----
 
 #### TODO #3: Corrigir Limites do Tabuleiro
 **Arquivo**: `jogada/jogada.c` linha 18  
