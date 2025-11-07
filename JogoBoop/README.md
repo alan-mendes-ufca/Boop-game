@@ -183,26 +183,6 @@ sudo make uninstall
 
 ### 🔥 Prioridade ALTA - Consertar Bugs Críticos
 
-#### TODO #3: Corrigir Limites do Tabuleiro
-**Arquivo**: `jogada/jogada.c` linha 18  
-**Problema**: Valida `linha >= 7` permitindo linha 6 em tabuleiro 6x6 (índices 0-5)  
-**Solução**:
-```c
-// ❌ ERRADO
-if (linha < 0 || linha >= 7 || coluna < 0 || coluna >= 6)
-
-// ✅ CORRETO
-if (linha < 0 || linha >= TAMANHO_TABULEIRO || 
-    coluna < 0 || coluna >= TAMANHO_TABULEIRO)
-```
-
-**O que estudar**:
-- Indexação de arrays em C (começam em 0)
-- Off-by-one errors (erro comum em loops e validações)
-- [Artigo: Common C errors](https://www.cs.yale.edu/homes/aspnes/pinewiki/C(2f)CommonErrors.html)
-
----
-
 #### TODO #4: Corrigir Lógica de Vitória
 **Arquivo**: `vitoria/vencer.c` linhas 48-51  
 **Problema**: Vitória baseada em tipo de peça ('g'/'G') em vez de jogador (cor)  

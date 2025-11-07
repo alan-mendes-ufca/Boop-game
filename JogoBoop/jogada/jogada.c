@@ -13,8 +13,8 @@ int verificarJogada(Celula **tabuleiro, int linha, int coluna, char* tipoPeca,
         return 0;
     }
 
-    // Verifica se a posição está dentro dos limites do tabuleiro
-    if (linha < 0 || linha >= 7 || coluna < 0 || coluna >= 6)
+    // Verifica se a posição está fora dos limites do tabuleiro
+    if (linha < 0 || linha >= 6 || coluna < 0 || coluna >= 6)
     {
         printf("\033[33mPosição fora dos limites do tabuleiro!\033[0m\n");
         printf("\033[33mVerificando posição: linha %d, coluna %d\033[0m\n", linha+1, coluna+1);
