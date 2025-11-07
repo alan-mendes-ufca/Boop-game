@@ -3,11 +3,11 @@
 #include <string.h>
 #include "../funcoes.h"
 
-int verificarJogada(Celula **tabuleiro, int linha, int coluna, char tipoPeca,
+int verificarJogada(Celula **tabuleiro, int linha, int coluna, char* tipoPeca,
                     int *gatinhosJogadorAtual, int *gataoJogadorAtual)
 {
     // Verifica se o tipo de peça é válido
-    if (tipoPeca != 'g' && tipoPeca != 'G')
+    if (strcmp(tipoPeca, "g") != 0 && strcmp(tipoPeca, "G") != 0)
     {
         printf("Tipo de peça inválido! Use 'g' para gatinho ou 'G' para gatão.\n");
         return 0;
@@ -23,12 +23,12 @@ int verificarJogada(Celula **tabuleiro, int linha, int coluna, char tipoPeca,
 
     if (tabuleiro[linha][coluna].gato == ' ')
     { // Dereferenciando
-        if (tipoPeca == 'g' && *gatinhosJogadorAtual > 0)
+        if (strcmp(tipoPeca, "g") == 0 && *gatinhosJogadorAtual > 0)
         {
             (*gatinhosJogadorAtual)--;
             return 1;
         }
-        else if (tipoPeca == 'G' && *gataoJogadorAtual > 0)
+        else if (strcmp(tipoPeca, "G") == 0 && *gataoJogadorAtual > 0)
         {
             (*gataoJogadorAtual)--;
             return 1;
@@ -46,7 +46,7 @@ int posicaoValida(int linha, int coluna, int totalLinhas, int totalColunas)
 }
 
 void aplicarBoop(Celula **tabuleiro, int linha, int coluna, int direcaoLinha, int direcaoColuna,
-                 int totalLinhas, int totalColunas, char tipoPeca,
+                 int totalLinhas, int totalColunas, char* tipoPeca,
                  int *gatinhosJogador1, int *gatoJogador1,
                  int *gatinhosJogador2, int *gatoJogador2, int saltando, int *gatosAtivos)
 {
@@ -65,7 +65,7 @@ void aplicarBoop(Celula **tabuleiro, int linha, int coluna, int direcaoLinha, in
     }
 
     // Gatinhos não empurram gatos
-    if (tipoPeca == 'g' && tabuleiro[proxLinha][proxColuna].gato == 'G')
+    if (strcmp(tipoPeca, "g") == 0 &&  strcmp(&tabuleiro[proxLinha][proxColuna].gato, "G") == 0)
     {
         return;
     }
@@ -142,12 +142,12 @@ void aplicarBoop(Celula **tabuleiro, int linha, int coluna, int direcaoLinha, in
 void fazBoop(
     Celula **tabuleiro, int linha, int coluna, int totalLinhas, int totalColunas,
     int *gatinhosJogadorAtual, int *gataoJogadorAtual,
-    int *gatinhosAdversario, int *gataoAdversario, char tipoPeca, int Jogador, int *gatosAtivos, int playCorreta)
+    int *gatinhosAdversario, int *gataoAdversario, char* tipoPeca, int Jogador, int *gatosAtivos, int playCorreta)
 {
     // Verifica jogada válida e atualiza o tabuleiro
     if (playCorreta)
     {
-        tabuleiro[linha][coluna].gato = tipoPeca;
+        tabuleiro[linha][coluna].gato = *tipoPeca;
         tabuleiro[linha][coluna].cor = (Jogador == 1) ? RED : BLUE;
     }
     // O vetor direcoes é um vetor bidimensional (ou matriz 2D).

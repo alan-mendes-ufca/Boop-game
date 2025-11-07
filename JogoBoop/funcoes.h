@@ -25,7 +25,7 @@ typedef struct
 
 void get_input(char *tipoPeca, int *linha, char *coluna);
 
-void fluxoJogo(Celula **tabuleiro, int linha, int colunaIndex, char tipoPeca,
+void fluxoJogo(Celula **tabuleiro, int linha, int colunaIndex, char* tipoPeca,
                 Jogador jogador1, Jogador jogador2,
                 Jogador *atual, int turno, int jogadaValida);
                 

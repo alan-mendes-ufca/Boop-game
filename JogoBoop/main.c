@@ -17,7 +17,7 @@ int main()
     Jogador jogador2 = {8, 0, 0};
 
     Celula **tabuleiro;
-    char tipoPeca;
+    char* tipoPeca = malloc(sizeof(char));
     int linha, colunaIndex;
     char coluna;
 
@@ -37,7 +37,7 @@ int main()
 
         do
         {
-            get_input(&tipoPeca, &linha, &coluna);
+            get_input(tipoPeca, &linha, &coluna);
 
             // Ajusta entrada do jogador para os índices do tabuleiro
             linha--;
