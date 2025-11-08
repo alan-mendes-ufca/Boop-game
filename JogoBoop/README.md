@@ -181,29 +181,6 @@ sudo make uninstall
 
 ## 📝 TODO List - Roadmap de Melhorias
 
-### 🔥 Prioridade ALTA - Consertar Bugs Críticos
-
-#### TODO #4: Corrigir Lógica de Vitória
-**Arquivo**: `vitoria/vencer.c` linhas 48-51  
-**Problema**: Vitória baseada em tipo de peça ('g'/'G') em vez de jogador (cor)  
-**Solução**:
-```c
-// Precisamos verificar a COR da peça, não o tipo
-// Se usar enum de cor:
-if (pecaAtual == peca1 && pecaAtual == peca2) {
-    CorJogador corVencedora = tabuleiro[i][j].cor;
-    if (corVencedora == COR_JOGADOR1) return 1;
-    if (corVencedora == COR_JOGADOR2) return 2;
-}
-```
-
-**O que estudar**:
-- Lógica de domínio vs implementação técnica
-- Como estruturar dados para representar regras de jogo
-- Design de sistemas de pontuação/vitória
-
----
-
 ### ⚡ Prioridade MÉDIA - Melhorar Robustez
 
 #### TODO #5: Implementar Validação de Entrada Robusta

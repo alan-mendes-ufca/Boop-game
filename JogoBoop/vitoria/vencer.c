@@ -24,8 +24,8 @@ int verificaVitoria(Celula **tabuleiro, int linhas, int colunas, int gatosNaCama
     {
         for (int j = 0; j < colunas; j++)
         {
-            char pecaAtual = tabuleiro[i][j].gato;
-            if (pecaAtual == 'g' || pecaAtual == 'G')
+            Celula pecaAtual = tabuleiro[i][j];
+            if (pecaAtual.gato == 'g' || pecaAtual.gato == 'G')
             {
                 for (int d = 0; d < 4; d++)
                 {
@@ -42,11 +42,11 @@ int verificaVitoria(Celula **tabuleiro, int linhas, int colunas, int gatosNaCama
                         char peca2 = tabuleiro[x2][y2].gato;
 
                         // Verifica alinhamento de três peças consecutivas
-                        if (pecaAtual == peca1 && pecaAtual == peca2)
+                        if (pecaAtual.gato == peca1 && pecaAtual.gato == peca2)
                         {
-                            if (pecaAtual == 'g')
+                            if (strcmp(pecaAtual.cor, RED) == 0)
                                 return 1; // Jogador 1 venceu
-                            if (pecaAtual == 'G')
+                            if (strcmp(pecaAtual.cor, BLUE) == 0)
                                 return 2; // Jogador 2 venceu
                         }
                     }
